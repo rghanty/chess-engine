@@ -12,9 +12,13 @@ class Move:
         self.pieceMoved = board[self.startRow][self.startCol]
         self.pieceCaptured = board[self.endRow][self.endCol]
     
+    def __eq__(self, other):
+        if isinstance(other,Move):
+            return self.startRow == other.startRow and self.startCol == other.startCol and self.endRow == other.endRow and self.endCol == other.endCol
+    
     def notation(self):
         #can make this real chess notation
-        return self.getRankFile(self.startRow,self.startCol) + self.getRankFile(self.endRow, self.endCol)       #if move is pawn from a2 to a4, returns a2a4
+        return self.getRankFile(self.startRow,self.startCol) + "->" + self.getRankFile(self.endRow, self.endCol)       #if move is pawn from a2 to a4, returns a2a4
 
 
     def getRankFile(self,r,c):
