@@ -4,17 +4,27 @@ from move import Move
 class GameState:
 
     def __init__(self):
-        self.board = [["bR","bH","bB","bQ","bK","bB","bH","bR"],
+        self.board = [["bR","bN","bB","bQ","bK","bB","bN","bR"],
                       ["bP","bP","bP","bP","bP","bP","bP","bP"],
                       ["--","--","--","--","--","--","--","--"],
                       ["--","--","--","--","--","--","--","--"],
                       ["--","--","--","--","--","--","--","--"],
                       ["--","--","--","--","--","--","--","--"],
                       ["wP","wP","wP","wP","wP","wP","wP","wP"],
-                      ["wR","wH","wB","wQ","wK","wB","wH","wR"]]
+                      ["wR","wN","wB","wQ","wK","wB","wN","wR"]]
         
+        self.pieceFuncs = {"P":self.generatePawnMoves, "R": self.generateRookMoves, "N": self.generateKnightMoves,
+                           "B":self.generateBishopMoves, "K": self.generateKingMoves, "Q": self.generateQueenMoves}
         self.whiteTurn = True
         self.moveLog = [] 
+        self.whiteKing = (7,4)
+        self.blackKing = (0,4)
+        self.rivals = {True:"b", False:"w"}     #if it is white's turn, its rival is black and vice versa
+        self.allies = {True:"w", False:"b"}
+        self.start = {True:self.whiteKing, False:self.blackKing}
+        self.inCheck = False
+        self.pins = []
+        self.checks = [] 
     
     def makeMove(self, move):
         self.board[move.startRow][move.startCol] = "--"
